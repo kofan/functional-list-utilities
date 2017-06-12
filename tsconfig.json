@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "./built",
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true
+  },
+  "types": ["mocha", "chai"],
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./src/**/*.spec.ts"
+  ]
+}
