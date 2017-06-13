@@ -1,4 +1,7 @@
 export function shallowEquals<T>(list1: T[], list2: T[]): boolean {
+  validateOrThrow(list1);
+  validateOrThrow(list2);
+
   if (haveDifferentSize(list1, list2)) {
     return false;
   }
@@ -12,23 +15,32 @@ export function shallowEquals<T>(list1: T[], list2: T[]): boolean {
   return (head1 === head2) && shallowEquals(tail1, tail2);
 }
 
-function isEmpty<T>(list: T[]): boolean {
-  return list.length === 0;
+function validateOrThrow<T>(list: T[]): void {
+    if (!Array.isArray(list)) {
+        throw new TypeError('list should be an instance of Array');
+    }
 }
 
 function haveDifferentSize<T>(list1: T[], list2: T[]): boolean {
-  return list1.length !== list2.length
+    return list1.length !== list2.length
+}
+
+function isEmpty<T>(list: T[]): boolean {
+  return list.length === 0;
 }
 
 export function map<T, U>(
   list: T[],
   mapCallback: (item: T) => U
 ): U[] {
+  validateOrThrow(list);
+    
   if (isEmpty(list)) {
     return [];
   }
 
   const [head, ...tail] = list;
+
   return [mapCallback(head), ...map(tail, mapCallback)];
 }
 
@@ -37,6 +49,8 @@ export function reduce<T, U>(
   reduceCallback: (item: T, reducedValue: U) => U,
   initialValue: U
 ): U {
+  validateOrThrow(list);
+    
   if (isEmpty(list)) {
     return initialValue;
   }
@@ -50,6 +64,8 @@ export function filter<T>(
   list: T[],
   predicate: (item: T) => boolean
 ): T[] {
+  validateOrThrow(list);
+
   if (isEmpty(list)) {
     return [];
   }
@@ -59,7 +75,7 @@ export function filter<T>(
   const isHeadAccepted = predicate(head);
   const filteredTail = filter(tail, predicate);
 
-  return isHeadAccepted ? [head, ...filteredTail] : filteredTail
+  return isHeadAccepted ? [head, ...filteredTail] : filteredTail;
 }
 
 export function createMapReduceEngine<T, U, R>(

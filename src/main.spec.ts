@@ -8,6 +8,8 @@ import {
   createMapReduceEngine
 } from './main';
 
+const noop = () => false;
+
 describe('List utilities implemented with functional paradigm', () => {
   it('compares the lists using shallow algorithm', () => {
     expect(shallowEquals([1, 2, 3], [1, 2, 3])).to.be.true;
@@ -41,10 +43,17 @@ describe('List utilities implemented with functional paradigm', () => {
     const initial = 0;
 
     const adderOfSquares = createMapReduceEngine(mapper, reducer, initial);
-
     const actualSumOfSquars = adderOfSquares([1, 2, 3, 4, 5]);
     const expectedSumOfSquars = 55;
 
     expect(actualSumOfSquars).to.deep.equal(expectedSumOfSquars);
   });
+
+  it('throws TypeError when invalid list is provided', () => {
+    expect(() => map(null, noop)).to.throw(TypeError);
+
+    expect(() => reduce(null, noop, null)).to.throw(TypeError);
+    
+    expect(() => filter(null, noop)).to.throw(TypeError);
+  })
 });
