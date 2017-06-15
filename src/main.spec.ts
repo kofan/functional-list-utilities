@@ -11,7 +11,7 @@ import {
 const noop = () => false;
 
 describe('List utilities implemented with functional paradigm', () => {
-  it('compares the lists using shallow algorithm', () => {
+  it('compares two lists using shallow algorithm', () => {
     expect(shallowEquals([1, 2, 3], [1, 2, 3])).to.be.true;
     expect(shallowEquals([1, 2, 3], [2, 3, 4])).to.be.false;
   });

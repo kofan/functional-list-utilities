@@ -22,7 +22,7 @@ function validateOrThrow<T>(list: T[]): void {
 }
 
 function haveDifferentSize<T>(list1: T[], list2: T[]): boolean {
-    return list1.length !== list2.length
+    return list1.length !== list2.length;
 }
 
 function isEmpty<T>(list: T[]): boolean {
@@ -72,10 +72,9 @@ export function filter<T>(
 
   const [head, ...tail] = list;
 
-  const isHeadAccepted = predicate(head);
-  const filteredTail = filter(tail, predicate);
-
-  return isHeadAccepted ? [head, ...filteredTail] : filteredTail;
+  return predicate(head)
+    ? [head, ...filter(tail, predicate)]
+    : filter(tail, predicate);
 }
 
 export function createMapReduceEngine<T, U, R>(
